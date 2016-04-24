@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423080340) do
+ActiveRecord::Schema.define(version: 20160420004000) do
 
   create_table "media", force: :cascade do |t|
     t.string   "station"
@@ -22,9 +22,10 @@ ActiveRecord::Schema.define(version: 20160423080340) do
     t.string   "description"
     t.string   "media_url"
     t.string   "origin_url"
+    t.boolean  "live"
+    t.boolean  "to_delete"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "expired"
   end
 
 end

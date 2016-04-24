@@ -9,6 +9,8 @@ class CreateMedia < ActiveRecord::Migration
       t.string   "description"
       t.string   "media_url"
       t.string   "origin_url"
+      t.boolean  "live"
+      t.boolean  "to_delete"
       t.timestamps
     end
   end

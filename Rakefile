@@ -14,8 +14,10 @@ Rails.application.load_tasks
 namespace :db do
   desc "Fetches media sources and writes them to the database"
   task :update => :environment do
+
     puts "Update database..."
     puts "Fetching update links..."
+
     update_doc = File.open("app/data/update-json.xml") { |f| Nokogiri::XML(f) }
     update_link_list = update_doc.search('Server').map { |node| node.at('URL').text.strip }
 
@@ -32,19 +34,19 @@ namespace :db do
 
       XZ.decompress_file("tmp/media/tmp.xz", "tmp/media/tmp.txt")
 
-      line_count = `wc -l "tmp/media/test.txt"`.strip.split(' ')[0].to_i
+      line_count = `wc -l "tmp/media/tmp.txt"`.strip.split(' ')[0].to_i
 
       puts "Decompressing #{update_link} complete! Number of lines: #{line_count}"
 
-      if line_count > 10
+      if line_count > 10000
 
-        puts "Declare all media database entries as expired"
-        Media.update_all(expired: true)
+        puts "Set all old media database to delete after fetch"
+        Media.update_all(to_delete: true)
 
         puts "Reading media links..."
 
         # Read JSON from a file, iterate over objects
-        file = open("tmp/media/test.txt")
+        file = open("tmp/media/tmp.txt")
 
         current_station = ''
         urls = []
@@ -87,49 +89,42 @@ namespace :db do
             if (!urls.include?(url))
               urls.push(url)
 
-
-              dbMediaEntry = Media.find_by(media_url: url)
-
-              if dbMediaEntry.blank?
-
-                Media.create(
-                    { station: current_station,
-                      title: title,
-                      genre: genre,
-                      date: date,
-                      duration: duration,
-                      description: description,
-                      media_url: url,
-                      origin_url: website,
-                      expired: false
-                    })
-
-              else
-                dbMediaEntry.update(expired: false)
-              end
+              Media.create(
+                  { station: current_station,
+                    title: title,
+                    genre: genre,
+                    date: date,
+                    duration: duration,
+                    description: description,
+                    media_url: url,
+                    origin_url: website,
+                    to_delete: false,
+                    live: false
+                  })
 
             end
-
           end
 
           bar.inc
         end
         puts "Reading media links completed!"
 
+        puts "Set new data live..."
+        Media.update_all(live: true)
         puts "Deleting deprecated links..."
-
-        Media.destroy_all(expired: true)
+        Media.destroy_all(to_delete: true)
         bar.finished
         break;
       else
         puts "#{update_link} is too small!"
       end
     end
-
+    puts "Finished updating Database!"
   end
 
   desc "Cleans up database in case another rake tasks failes and messes up database"
   task :clean => :environment do
-    Media.update_all(expired: false)
+    Media.update_all(live: true)
+    Media.destroy_all(to_delete: true)
   end
 end
