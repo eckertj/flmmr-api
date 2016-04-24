@@ -24,6 +24,8 @@ gem 'oj'
 
 gem 'rake-progressbar'
 
+gem 'whenever', :require => false
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
