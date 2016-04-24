@@ -1,12 +1,12 @@
-# mAPI
+# flmmr-api
 
-mAPI ist eine Ruby on Rails RESTful JSON API für die Mediatheken der deutschen öffentlich-rechtlichen Rundfunkanstalten.
+flmmr-api ist eine Ruby on Rails RESTful JSON API für die Mediatheken der deutschen öffentlich-rechtlichen Rundfunkanstalten.
 
 
 ### Getting up and running
 
 ```
-$ git clone git@github.com:eckertj/mAPI.git
+$ git clone git@github.com:eckertj/flmmr-api.git
 $ bundle install
 $ rake db:migrate
 $ rake db:update #loads data and fills database
@@ -17,7 +17,7 @@ The data can currently only search by a simple keyword search that can contain t
 
 #### Request
 ```
-someurl.io/api?q=tatort
+flmmr.tv/api?q=tatort
 ```
 
 #### Anwser
