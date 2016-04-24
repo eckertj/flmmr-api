@@ -6,8 +6,12 @@ require 'open-uri'
 require 'json'
 require 'oj'
 require 'rake-progressbar'
+require 'time'
 
 require File.expand_path('../config/application', __FILE__)
+
+require "#{Rails.root}/app/helpers/application_helper"
+include ApplicationHelper
 
 Rails.application.load_tasks
 
@@ -16,27 +20,25 @@ namespace :db do
   task :update => :environment do
 
     puts "Update database..."
-    puts "Fetching update links..."
 
     update_doc = File.open("app/data/update-json.xml") { |f| Nokogiri::XML(f) }
     update_link_list = update_doc.search('Server').map { |node| node.at('URL').text.strip }
 
-    puts "Fetching update links complete!"
-
     for update_link in update_link_list
-      puts "Fetching #{update_link}..."
+      print "Fetching #{update_link}... "
 
       download = open(update_link)
       IO.copy_stream(download, "tmp/media/tmp.xz")
 
-      puts "Fetching #{update_link} complete!"
-      puts "Decompressing #{update_link}..."
+      print "complete! \n"
+
+      print "Decompressing #{update_link}..."
 
       XZ.decompress_file("tmp/media/tmp.xz", "tmp/media/tmp.txt")
 
       line_count = `wc -l "tmp/media/tmp.txt"`.strip.split(' ')[0].to_i
 
-      puts "Decompressing #{update_link} complete! Number of lines: #{line_count}"
+      print "complete! Number of lines: #{line_count} \n"
 
       if line_count > 10000
 
@@ -75,36 +77,35 @@ namespace :db do
                 genre = parsed['X'][1]
               end
               title = parsed['X'][2]
-              date = parsed['X'][3]
-              duration = parsed['X'][5]
+              date = parsed['X'][3].length<1 ? Time.now : Time.parse(parsed['X'][3])
+              duration = parsed['X'][5].length<1 ? 0 : timestring_to_int(parsed['X'][5])
               description = parsed['X'][7]
               url = parsed['X'][8]
               website = parsed['X'][9]
-            end
 
-            if (station != '')
-              current_station = station
-            end
+              if (station != '')
+                current_station = station
+              end
 
-            if (!urls.include?(url))
-              urls.push(url)
+              if (!urls.include?(url))
+                urls.push(url)
 
-              Media.create(
-                  { station: current_station,
-                    title: title,
-                    genre: genre,
-                    date: date,
-                    duration: duration,
-                    description: description,
-                    media_url: url,
-                    origin_url: website,
-                    to_delete: false,
-                    live: false
-                  })
+                Media.create(
+                    {station: current_station,
+                     title: title,
+                     genre: genre,
+                     date: date,
+                     duration: duration,
+                     description: description,
+                     media_url: url,
+                     origin_url: website,
+                     to_delete: false,
+                     live: false
+                    })
 
+              end
             end
           end
-
           bar.inc
         end
         puts "Reading media links completed!"

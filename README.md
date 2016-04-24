@@ -8,7 +8,7 @@ flmmr-api ist eine Ruby on Rails RESTful JSON API für die Mediatheken der deuts
 ```
 $ git clone git@github.com:eckertj/flmmr-api.git
 $ bundle install
-$ rake db:migrate
+$ rake db:setup
 $ rake db:update #loads data and fills database
 ```
 
