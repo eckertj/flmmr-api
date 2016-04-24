@@ -35,3 +35,5 @@ Media.create(
       }
     ])
 =end
+
+Token.create({api_key: "KgxkRicETXmQYgv3"})

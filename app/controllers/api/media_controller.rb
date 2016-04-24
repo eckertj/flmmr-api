@@ -1,5 +1,7 @@
 class API::MediaController < ApplicationController
 
+  # before_filter :authenticate
+
   def index
     @media = Media.all
 

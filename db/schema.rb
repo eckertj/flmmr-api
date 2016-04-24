@@ -28,4 +28,10 @@ ActiveRecord::Schema.define(version: 20160420004000) do
     t.datetime "updated_at"
   end
 
+  create_table "tokens", force: :cascade do |t|
+    t.string   "api_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end
