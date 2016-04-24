@@ -1,8 +1,8 @@
 # Ignore bundler config.
 .bundle
 
-# Ignore bundler generated Gemfile
-Gemfile.lock
+# Ignore bundler generated Gemfile (commented out for heroku)
+# Gemfile.lock
 
 # Ignore the default SQLite database
 db/*.sqlite3

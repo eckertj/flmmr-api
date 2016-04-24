@@ -13,15 +13,24 @@ $ rake db:update #loads data and fills database
 ```
 
 ### Usage
-The data can currently only search by a simple keyword search that can contain the station, title, date etc.
+The data can be accessed by passing several url parameters. Currently the following parameters are implemented:
+
+```ruby
+q             # query on tv station, title, genre and description
+station       # limits response to a specific tv station
+after_date    # limits response to media that was published after a specific date
+before_date   # limits response to media that was published before a specific date
+min_duration  # limits response to media to a minimum duration (in seconds)
+max_duration  # limits response to media to a maximum duration (in seconds)
+```
 
 #### Request
 ```
 flmmr.tv/api?q=tatort
 ```
 
-#### Anwser
-```
+#### Response
+```json
 {
   media: [
     {
