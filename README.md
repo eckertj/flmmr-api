@@ -49,7 +49,7 @@ flmmr-api.herokuapp.com/api?q=tatort
 
 ### Try it
 
-Try it live at [```flmmr-api.herokuapp.com/api?q=searchterm```](flmmr-api.herokuapp.com/api?q=searchterm)!
+Try it live at [```flmmr-api.herokuapp.com/api?q=searchterm```](https://flmmr-api.herokuapp.com/api?q=searchterm)!
 
 There is also some sample data in the ```seeds.rb``` that can be commented in so that you can test the API without filling it with real data. Currently, the application was tested only on Ruby 2.3.0.
 
