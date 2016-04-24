@@ -26,31 +26,32 @@ max_duration  # limits response to media to a maximum duration (in seconds)
 
 #### Request
 ```
-flmmr.tv/api?q=tatort
+flmmr-api.herokuapp.com/api?q=tatort
 ```
 
 #### Response
 ```json
 {
-  media: [
-    {
-      station: "ARD",
-      title: "Tatort: Kaltblütig (Video tgl. ab 20 Uhr)",
-      genre: "",
-      date: "09.03.2016",
-      duration: "01:29:00",
-      description: "Roza Lanczeck, die Freundin des .....",
-      media_url: "http://pd-ondemand.swr.de/swr-fernsehen/filmserie/847022.l.mp4"
-    }
-  ]
+    media: [
+        {
+            station: "ARD",
+            title: "Rechtsmedizin - Hinter den Kulissen",
+            genre: "",
+            date: "2015-06-16T00:00:00.000Z",
+            duration: 300,
+            description: "Ein Blick hinter die Kulissen der Bonner Rechtsmedizin. In meterlangen Regalen lagern hier Haar- und Blutproben. Und eines wird sofort klar: In den Laboren braucht es viel mehr Geduld als ein Fernsehtatort vermuten lässt.",
+            media_url: "http://ondemand-ww.wdr.de/medp/fsk0/72/729223/729223_7872044.mp4"
+        }
+    ]
 }
 ```
 
 
 ### Try it
 
+Try it live at ```flmmr-api.herokuapp.com/api?q=searchterm```!
 
-There is some sample data so that you can test the API out. If you find a problem please let me know and I'll fix it :)
+There is also some sample data in the ```seeds.rb``` that can be commented in so that you can test the API without filling it with real data. Currently, the application was tested only on Ruby 2.3.0.
 
 
 ### Credits
