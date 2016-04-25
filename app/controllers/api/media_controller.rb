@@ -6,7 +6,11 @@ class API::MediaController < ApplicationController
     @media = Media.all
 
     # Search
-    @media = @media.search(params[:q]) if params[:q]
+    search_string = params[:q] if params[:q]
+    search_terms = search_string.split(' ')
+    search_terms.each do |search_term|
+      @media = @media.search(search_term) if search_term
+    end
 
     # TV station
     @media = @media.station(params[:station]) if params[:station]
@@ -25,4 +29,4 @@ class API::MediaController < ApplicationController
     render json: @media if stale?(etag: @media.all, last_modified: @media.maximum(:updated_at))
   end
 
- end
+end
