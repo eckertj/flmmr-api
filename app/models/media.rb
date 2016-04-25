@@ -17,4 +17,7 @@ class Media < ActiveRecord::Base
   scope :min_duration, -> (duration) { where("duration >= ?", duration) }
   scope :max_duration, -> (duration) { where("duration <= ?", duration) }
 
+  scope :most_recent, -> () { order(date: :desc) }
+  scope :least_recent, -> () { order(date: :asc) }
+
 end
