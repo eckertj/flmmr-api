@@ -16,12 +16,14 @@ $ rake db:update #loads data and fills database
 The data can be accessed by passing several url parameters. Currently the following parameters are implemented:
 
 ```ruby
-q             # query on tv station, title, genre and description
-station       # limits response to a specific tv station
-after_date    # limits response to media that was published after a specific date
-before_date   # limits response to media that was published before a specific date
-min_duration  # limits response to media to a minimum duration (in seconds)
-max_duration  # limits response to media to a maximum duration (in seconds)
+q                   # query on tv station, title, genre and description, searchterms can be divided by '+'
+station             # limits response to a specific tv station
+after_date          # limits response to media that was published after a specific date
+before_date         # limits response to media that was published before a specific date
+min_duration        # limits response to media to a minimum duration (in seconds)
+max_duration        # limits response to media to a maximum duration (in seconds)
+limit               # limits response to a maximum length
+order_least_recent  # set order_least_recent=1 the oldest media first
 ```
 
 #### Request
