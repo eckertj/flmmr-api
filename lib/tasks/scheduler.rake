@@ -15,15 +15,15 @@ namespace :db do
       print "#{Time.now.utc.iso8601}: Fetching #{update_link}... "
 
       download = open(update_link)
-      IO.copy_stream(download, "#{Rails.root}/tmp/media/tmp.xz")
+      IO.copy_stream(download, "#{Rails.root}/../tmp/media/tmp.xz")
 
       print "#{Time.now.utc.iso8601}: complete! \n"
 
       print "#{Time.now.utc.iso8601}: Decompressing #{update_link}..."
 
-      XZ.decompress_file("#{Rails.root}/tmp/media/tmp.xz", "#{Rails.root}/tmp/media/tmp.txt")
+      XZ.decompress_file("#{Rails.root}/../tmp/media/tmp.xz", "#{Rails.root}/../tmp/media/tmp.txt")
 
-      line_count = `wc -l "#{Rails.root}/tmp/media/tmp.txt"`.strip.split(' ')[0].to_i
+      line_count = `wc -l "#{Rails.root}/../tmp/media/tmp.txt"`.strip.split(' ')[0].to_i
 
       print "#{Time.now.utc.iso8601}: complete! Number of lines: #{line_count} \n"
 
@@ -35,7 +35,7 @@ namespace :db do
         puts "#{Time.now.utc.iso8601}: Reading media links..."
 
         # Read JSON from a file, iterate over objects
-        file = open("#{Rails.root}/tmp/media/tmp.txt")
+        file = open("#{Rails.root}/../tmp/media/tmp.txt")
 
         current_station = ''
         urls = []
