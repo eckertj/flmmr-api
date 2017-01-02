@@ -5,22 +5,23 @@ namespace :db do
 
     puts "#{Time.now.utc.iso8601}: Update database..."
 
-    update_doc = File.open("../../app/data/update-json.xml") { |f| Nokogiri::XML(f) }
+    update_doc = File.open("#{Rails.root}/app/data/update-json.xml") { |f| Nokogiri::XML(f) }
+
     update_link_list = update_doc.search('Server').map { |node| node.at('URL').text.strip }
 
     for update_link in update_link_list
       print "#{Time.now.utc.iso8601}: Fetching #{update_link}... "
 
       download = open(update_link)
-      IO.copy_stream(download, "../../tmp/media/tmp.xz")
+      IO.copy_stream(download, "#{Rails.root}/tmp/media/tmp.xz")
 
       print "#{Time.now.utc.iso8601}: complete! \n"
 
       print "#{Time.now.utc.iso8601}: Decompressing #{update_link}..."
 
-      XZ.decompress_file("../../tmp/media/tmp.xz", "../../tmp/media/tmp.txt")
+      XZ.decompress_file("#{Rails.root}/tmp/media/tmp.xz", "#{Rails.root}/tmp/media/tmp.txt")
 
-      line_count = `wc -l "../../tmp/media/tmp.txt"`.strip.split(' ')[0].to_i
+      line_count = `wc -l "#{Rails.root}/tmp/media/tmp.txt"`.strip.split(' ')[0].to_i
 
       print "#{Time.now.utc.iso8601}: complete! Number of lines: #{line_count} \n"
 
@@ -32,7 +33,7 @@ namespace :db do
         puts "#{Time.now.utc.iso8601}: Reading media links..."
 
         # Read JSON from a file, iterate over objects
-        file = open("../../tmp/media/tmp.txt")
+        file = open("#{Rails.root}/tmp/media/tmp.txt")
 
         current_station = ''
         urls = []
@@ -115,4 +116,5 @@ namespace :db do
     Media.delete_all(to_delete: true)
     puts "#{Time.now.utc.iso8601}: done!"
   end
+
 end
