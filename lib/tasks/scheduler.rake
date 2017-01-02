@@ -5,7 +5,9 @@ namespace :db do
 
     puts "#{Time.now.utc.iso8601}: Update database..."
 
-    update_doc = File.open("#{Rails.root}/app/data/update-json.xml") { |f| Nokogiri::XML(f) }
+    puts "#{Time.now.utc.iso8601}: Rails root: #{Rails.root} \n"
+
+    update_doc = File.open("app/data/update-json.xml") { |f| Nokogiri::XML(f) }
 
     update_link_list = update_doc.search('Server').map { |node| node.at('URL').text.strip }
 
