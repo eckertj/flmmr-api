@@ -7,6 +7,7 @@ require 'json'
 require 'oj'
 require 'rake-progressbar'
 require 'time'
+require 'fileutils'
 
 require File.expand_path('../config/application', __FILE__)
 
